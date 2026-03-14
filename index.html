@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kedai Nindy - Toko Kelontong Terlengkap</title>
+  <meta name="description"
+    content="Kedai Nindy menyediakan beras, rokok, jajanan, minuman dingin, ayam potong, obat Herbalife, jasa transfer, dan service HP & elektronik. Pesan langsung via WhatsApp!">
+  <meta name="keywords" content="kedai nindy, toko kelontong, warung, beras, rokok, jajanan, minuman dingin">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏪</text></svg>">
+</head>
+
+<body>
+
+  <!-- ===== NAVBAR ===== -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <a href="#" class="navbar-brand">
+        <div class="brand-icon">🏪</div>
+        Kedai Nindy
+      </a>
+
+      <button class="menu-toggle" onclick="toggleMobileMenu()" aria-label="Toggle menu">☰</button>
+
+      <div class="navbar-links">
+        <a href="#beranda">Beranda</a>
+        <a href="#produk">Produk</a>
+        <a href="#kontak">Kontak</a>
+        <button class="cart-btn" onclick="openCart()" id="navCartBtn">
+          🛒 Keranjang
+          <span class="cart-count">0</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero" id="beranda">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">🔥 Harga Terjangkau Setiap Hari</div>
+        <h1>Selamat Datang di<br><span>Kedai Nindy</span></h1>
+        <p>Toko kelontong terlengkap dengan harga bersahabat. Dari beras, rokok, jajanan, sampai minuman dingin — semua
+          ada di sini!</p>
+        <div class="hero-actions">
+          <a href="#produk" class="btn btn-primary">🛍️ Belanja Sekarang</a>
+          <a href="https://wa.me/6281266002147" target="_blank" class="btn btn-outline">💬 Hubungi Kami</a>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <div class="stat-number">30+</div>
+            <div class="stat-label">Produk Tersedia</div>
+          </div>
+          <div class="hero-stat">
+            <div class="stat-number">⭐ 4.9</div>
+            <div class="stat-label">Rating Pelanggan</div>
+          </div>
+          <div class="hero-stat">
+            <div class="stat-number">24/7</div>
+            <div class="stat-label">Siap Melayani</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-image">
+        <img src="hero-banner.png" alt="Kedai Nindy - Toko Kelontong Terlengkap" width="560" height="400">
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CATEGORIES + PRODUCTS ===== -->
+  <section class="categories" id="produk">
+    <div class="container">
+      <div class="section-header">
+        <h2>🛒 Produk & Layanan Kami</h2>
+        <p>Pilih kategori atau cari produk dan layanan yang Anda butuhkan</p>
+      </div>
+
+      <!-- Search -->
+      <div class="search-section">
+        <div class="search-bar">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="searchInput" placeholder="Cari produk... (misal: indomie, aqua, beras)"
+            autocomplete="off">
+        </div>
+      </div>
+
+      <!-- Main Category Tabs -->
+      <div class="category-tabs main-tabs">
+        <button class="category-tab active" data-category="jualan" onclick="setMainCategory('jualan')">🛍️
+          Jualan</button>
+        <button class="category-tab" data-category="transfer" onclick="setMainCategory('transfer')">💸 Transfer</button>
+        <button class="category-tab" data-category="ayam" onclick="setMainCategory('ayam')">🍗 Jualan Ayam</button>
+        <button class="category-tab" data-category="herbalife" onclick="setMainCategory('herbalife')">💊 Obat
+          Herbalife</button>
+        <button class="category-tab" data-category="service" onclick="setMainCategory('service')">🔧 Service HP &
+          Elektro</button>
+        <button class="category-tab" data-category="topup" onclick="setMainCategory('topup')">🎮 Top Up Game</button>
+        <button class="category-tab" data-category="akun" onclick="setMainCategory('akun')">👑 Akun Premium</button>
+      </div>
+
+      <!-- Sub-category Tabs (for Jualan) -->
+      <div class="category-tabs sub-tabs" id="subTabs">
+        <button class="category-tab sub-tab active" data-category="semua" onclick="setCategory('semua')">🏪
+          Semua</button>
+        <button class="category-tab sub-tab" data-category="beras" onclick="setCategory('beras')">🍚 Beras</button>
+        <button class="category-tab sub-tab" data-category="rokok" onclick="setCategory('rokok')">🚬 Rokok</button>
+        <button class="category-tab sub-tab" data-category="jajanan" onclick="setCategory('jajanan')">🍟
+          Jajanan</button>
+        <button class="category-tab sub-tab" data-category="minuman" onclick="setCategory('minuman')">🧊 Minuman
+          Dingin</button>
+      </div>
+
+      <!-- Transfer Calculator Section -->
+      <div class="transfer-section" id="transferSection" style="display:none;">
+        <div class="transfer-card">
+          <div class="transfer-header">
+            <div class="transfer-icon">💸</div>
+            <h3>Jasa Transfer Uang</h3>
+            <p>Hitung biaya transfer berdasarkan nominal yang ingin dikirim</p>
+          </div>
+          <div class="transfer-calculator">
+            <label for="transferAmount">Masukkan Nominal Transfer</label>
+            <div class="transfer-input-wrap">
+              <span class="transfer-prefix">Rp</span>
+              <input type="text" id="transferAmount" placeholder="Contoh: 500000" oninput="calculateTransferFee()"
+                autocomplete="off">
+            </div>
+            <div class="transfer-result" id="transferResult">
+              <div class="transfer-result-row">
+                <span>Nominal Transfer</span>
+                <span id="transferNominal">Rp0</span>
+              </div>
+              <div class="transfer-result-row">
+                <span>Biaya Admin</span>
+                <span id="transferFee" class="fee-amount">Rp0</span>
+              </div>
+              <div class="transfer-result-row total-row">
+                <span>Total Bayar</span>
+                <span id="transferTotal">Rp0</span>
+              </div>
+            </div>
+            <div class="transfer-fee-info">
+              <h4>📋 Daftar Biaya Transfer</h4>
+              <div class="fee-table">
+                <div class="fee-row"><span>Di bawah Rp500.000</span><span class="fee-badge">Rp5.000</span></div>
+                <div class="fee-row"><span>Rp500.000 - Rp2.000.000</span><span class="fee-badge">Rp10.000</span></div>
+                <div class="fee-row"><span>Rp2.000.001 - Rp5.000.000</span><span class="fee-badge">Rp15.000</span></div>
+                <div class="fee-row"><span>Di atas Rp5.000.000</span><span class="fee-badge">Rp20.000</span></div>
+              </div>
+            </div>
+            <a href="https://wa.me/6281266002147?text=Halo%20Kedai%20Nindy%2C%20saya%20mau%20jasa%20transfer."
+              target="_blank" class="btn btn-primary transfer-wa-btn">💬 Hubungi via WhatsApp</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Products Grid -->
+      <div class="products-grid" id="productsGrid">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PROMO BANNER ===== -->
+  <section class="promo-banner">
+    <div class="container">
+      <div class="promo-card">
+        <div class="promo-content">
+          <h2>💬 Pesan Lewat WhatsApp!</h2>
+          <p>Malas keluar rumah? Pilih produk, masukkan ke keranjang, lalu kirim pesanan langsung ke WhatsApp kami.
+            Praktis dan cepat!</p>
+        </div>
+        <a href="https://wa.me/6281266002147" target="_blank" class="btn btn-primary">📱 Chat Sekarang</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer" id="kontak">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3>🏪 Kedai Nindy</h3>
+          <p>Toko kelontong terlengkap dengan harga bersahabat. Melayani dengan sepenuh hati untuk kebutuhan sehari-hari
+            Anda.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Layanan</h4>
+          <a href="#" onclick="setMainCategory('jualan'); return false;">🛍️ Jualan</a>
+          <a href="#" onclick="setMainCategory('transfer'); return false;">💸 Jasa Transfer</a>
+          <a href="#" onclick="setMainCategory('ayam'); return false;">🍗 Jualan Ayam</a>
+          <a href="#" onclick="setMainCategory('herbalife'); return false;">💊 Obat Herbalife</a>
+          <a href="#" onclick="setMainCategory('service'); return false;">🔧 Service HP & Elektro</a>
+          <a href="#" onclick="setMainCategory('topup'); return false;">🎮 Top Up Game</a>
+          <a href="#" onclick="setMainCategory('akun'); return false;">👑 Akun Premium</a>
+        </div>
+        <div class="footer-col">
+          <h4>Hubungi Kami</h4>
+          <a href="https://wa.me/6281266002147" target="_blank">💬 WhatsApp</a>
+          <a href="tel:081266002147">📞 081266002147</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 Kedai Nindy. Semua Hak Dilindungi. ❤️</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== CART SIDEBAR ===== -->
+  <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+  <div class="cart-sidebar" id="cartSidebar">
+    <div class="cart-header">
+      <h3>🛒 Keranjang Belanja</h3>
+      <button class="cart-close-btn" onclick="closeCart()" aria-label="Tutup keranjang">✕</button>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <div class="cart-empty">
+        <div class="empty-icon">🛒</div>
+        <p>Keranjang masih kosong</p>
+        <span>Yuk pilih produk favorit Anda!</span>
+      </div>
+    </div>
+    <div class="cart-footer">
+      <div class="cart-total">
+        <span class="total-label">Total Belanja</span>
+        <span class="total-amount" id="cartTotal">Rp0</span>
+      </div>
+      <button class="cart-wa-btn" id="waBtn" onclick="sendWhatsApp()" disabled>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
+          <path
+            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+        </svg>
+        Pesan via WhatsApp
+      </button>
+    </div>
+  </div>
+
+  <!-- ===== PRODUCT MODAL ===== -->
+  <div class="product-modal" id="productModal">
+    <div class="product-modal-overlay" id="productModalOverlay"></div>
+    <div class="product-modal-content" id="productModalContent">
+      <!-- Rendered by JS -->
+    </div>
+  </div>
+
+  <!-- ===== TOAST CONTAINER ===== -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- ===== SCROLL TO TOP ===== -->
+  <button class="scroll-top-btn" id="scrollTopBtn" onclick="scrollToTop()" aria-label="Scroll ke atas">↑</button>
+
+  <script src="products.js"></script>
+  <script src="script.js"></script>
+</body>
+
+</html>

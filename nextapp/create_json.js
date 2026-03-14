@@ -1,0 +1,270 @@
+const fs = require('fs');
+
+const PRODUCTS = [
+  // ===== GROCERIES: BERAS =====
+  { id: "beras-premium", name: "Beras Premium", slug: "beras-premium", category: "groceries", image: "/assets/products/beras.png", description: "Beras pulen kualitas terbaik untuk keluarga", badge: "Best Seller", variants: [
+    { id: 1, label: "5 kg", price: 65000 },
+    { id: 5, label: "10 kg", price: 125000 }
+  ]},
+  { id: "beras-medium", name: "Beras Medium", slug: "beras-medium", category: "groceries", image: "/assets/products/beras.png", description: "Beras sehari-hari harga terjangkau", variants: [
+    { id: 2, label: "5 kg", price: 55000 }
+  ]},
+  { id: "beras-merah", name: "Beras Merah", slug: "beras-merah", category: "groceries", image: "/assets/products/beras-merah.png", description: "Beras merah organik sehat rendah GI", variants: [
+    { id: 3, label: "1 kg", price: 22000 }
+  ]},
+  { id: "beras-ketan", name: "Beras Ketan", slug: "beras-ketan", category: "groceries", image: "/assets/products/beras.png", description: "Untuk kue dan jajanan tradisional", variants: [
+    { id: 4, label: "1 kg", price: 25000 }
+  ]},
+  { id: "beras-pandan", name: "Beras Pandan Wangi", slug: "beras-pandan", category: "groceries", image: "/assets/products/beras.png", description: "Nasi wangi alami pandan premium", variants: [
+    { id: 6, label: "5 kg", price: 72000 }
+  ]},
+  { id: "beras-50kg", name: "Beras Karungan", slug: "beras-50kg", category: "groceries", image: "/assets/products/beras.png", description: "Beras enak harga grosir", badge: "Murah Meriah", variants: [
+    { id: 117, label: "50 kg", price: 500000 }
+  ]},
+
+  // ===== GROCERIES: ROKOK =====
+  { id: "gudang-garam", name: "Gudang Garam Filter", slug: "gudang-garam", category: "groceries", image: "/assets/products/rokok.png", description: "GG Filter 12 batang", variants: [
+    { id: 7, label: "1 Bungkus", price: 28000 }
+  ]},
+  { id: "djarum-super", name: "Djarum Super", slug: "djarum-super", category: "groceries", image: "/assets/products/rokok.png", description: "Djarum Super 12 batang", badge: "Populer", variants: [
+    { id: 8, label: "1 Bungkus", price: 26000 }
+  ]},
+  { id: "surya-16", name: "Surya 16", slug: "surya-16", category: "groceries", image: "/assets/products/rokok.png", description: "Gudang Garam Surya 16 batang", variants: [
+    { id: 9, label: "1 Bungkus", price: 32000 }
+  ]},
+  { id: "sampoerna-mild", name: "Sampoerna Mild", slug: "sampoerna-mild", category: "groceries", image: "/assets/products/rokok.png", description: "A Mild 16 batang", variants: [
+    { id: 10, label: "1 Bungkus", price: 30000 }
+  ]},
+  { id: "la-bold", name: "LA Bold", slug: "la-bold", category: "groceries", image: "/assets/products/rokok.png", description: "LA Bold 16 batang", variants: [
+    { id: 11, label: "1 Bungkus", price: 24000 }
+  ]},
+  { id: "magnum-filter", name: "Magnum Filter", slug: "magnum-filter", category: "groceries", image: "/assets/products/rokok.png", description: "Magnum Filter 12 batang", variants: [
+    { id: 12, label: "1 Bungkus", price: 18000 }
+  ]},
+
+  // ===== GROCERIES: JAJANAN =====
+  { id: "chitato", name: "Chitato Sapi Panggang", slug: "chitato", category: "groceries", image: "/assets/products/snack.png", description: "Keripik kentang rasa sapi panggang", variants: [
+    { id: 13, label: "1 Pcs", price: 10000 }
+  ]},
+  { id: "indomie", name: "Indomie Goreng", slug: "indomie", category: "groceries", image: "/assets/products/snack.png", description: "Mi instan goreng favorit Indonesia", badge: "Laris", variants: [
+    { id: 14, label: "1 Pcs", price: 3500 }
+  ]},
+  { id: "oreo", name: "Oreo Original", slug: "oreo", category: "groceries", image: "/assets/products/snack.png", description: "Biskuit Oreo rasa original", variants: [
+    { id: 15, label: "1 Pcs", price: 8000 }
+  ]},
+  { id: "taro-net", name: "Taro Net", slug: "taro-net", category: "groceries", image: "/assets/products/snack.png", description: "Snack ringan renyah", variants: [
+    { id: 16, label: "1 Pcs", price: 3000 }
+  ]},
+  { id: "richeese", name: "Richeese Nabati", slug: "richeese", category: "groceries", image: "/assets/products/snack.png", description: "Wafer keju lezat", variants: [
+    { id: 17, label: "1 Pcs", price: 5000 }
+  ]},
+  { id: "bengbeng", name: "Beng-Beng", slug: "bengbeng", category: "groceries", image: "/assets/products/snack.png", description: "Wafer karamel cokelat", variants: [
+    { id: 18, label: "1 Pcs", price: 3500 }
+  ]},
+  { id: "qtela", name: "Qtela Tempe", slug: "qtela", category: "groceries", image: "/assets/products/snack.png", description: "Keripik tempe original krispi", variants: [
+    { id: 19, label: "1 Pcs", price: 9000 }
+  ]},
+  { id: "popmie", name: "Pop Mie Ayam", slug: "popmie", category: "groceries", image: "/assets/products/snack.png", description: "Mi cup rasa ayam", variants: [
+    { id: 20, label: "1 Pcs", price: 5500 }
+  ]},
+
+  // ===== GROCERIES: MINUMAN =====
+  { id: "pucuk-harum", name: "Teh Pucuk Harum", slug: "pucuk-harum", category: "groceries", image: "/assets/products/minuman.png", description: "Teh manis dingin segar", variants: [
+    { id: 21, label: "1 Botol", price: 4000 }
+  ]},
+  { id: "coca-cola", name: "Coca-Cola", slug: "coca-cola", category: "groceries", image: "/assets/products/minuman.png", description: "Minuman bersoda menyegarkan", variants: [
+    { id: 22, label: "390 ml", price: 6000 }
+  ]},
+  { id: "aqua", name: "Aqua", slug: "aqua", category: "groceries", image: "/assets/products/minuman.png", description: "Air mineral segar", variants: [
+    { id: 23, label: "600 ml", price: 4000 }
+  ]},
+  { id: "pocari", name: "Pocari Sweat", slug: "pocari", category: "groceries", image: "/assets/products/minuman.png", description: "Minuman isotonik", variants: [
+    { id: 24, label: "500 ml", price: 8000 }
+  ]},
+  { id: "teh-botol", name: "Teh Botol Sosro", slug: "teh-botol", category: "groceries", image: "/assets/products/minuman.png", description: "Teh manis original", badge: "Favorit", variants: [
+    { id: 25, label: "1 Botol", price: 5000 }
+  ]},
+  { id: "sprite", name: "Sprite", slug: "sprite", category: "groceries", image: "/assets/products/minuman.png", description: "Minuman lemon lime segar", variants: [
+    { id: 26, label: "390 ml", price: 6000 }
+  ]},
+  { id: "fanta", name: "Fanta Strawberry", slug: "fanta", category: "groceries", image: "/assets/products/minuman.png", description: "Soda rasa stroberi segar", variants: [
+    { id: 27, label: "390 ml", price: 6000 }
+  ]},
+  { id: "yakult", name: "Yakult", slug: "yakult", category: "groceries", image: "/assets/products/minuman.png", description: "Minuman probiotik sehat", variants: [
+    { id: 28, label: "1 Pcs", price: 3000 }
+  ]},
+  { id: "kopi-abc", name: "Es Kopi Susu ABC", slug: "kopi-abc", category: "groceries", image: "/assets/products/minuman.png", description: "Kopi susu siap minum", variants: [
+    { id: 29, label: "1 Botol", price: 5000 }
+  ]},
+  { id: "floridina", name: "Floridina Orange", slug: "floridina", category: "groceries", image: "/assets/products/minuman.png", description: "Minuman jeruk dengan bulir asli", variants: [
+    { id: 30, label: "1 Botol", price: 4000 }
+  ]},
+
+  // ===== POULTRY =====
+  { id: "ayam-utuh", name: "Ayam Potong Utuh", slug: "ayam-utuh", category: "poultry", image: "/assets/products/ayam.png", description: "Ayam potong segar utuh per ekor", badge: "Segar", variants: [
+    { id: 31, label: "1 Ekor", price: 45000 }
+  ]},
+  { id: "dada-ayam", name: "Dada Ayam", slug: "dada-ayam", category: "poultry", image: "/assets/products/ayam.png", description: "Dada ayam fillet tanpa tulang", variants: [
+    { id: 32, label: "1 kg", price: 38000 }
+  ]},
+  { id: "paha-ayam", name: "Paha Ayam", slug: "paha-ayam", category: "poultry", image: "/assets/products/ayam.png", description: "Paha ayam atas segar", badge: "Laris", variants: [
+    { id: 33, label: "1 kg", price: 35000 }
+  ]},
+  { id: "sayap-ayam", name: "Sayap Ayam", slug: "sayap-ayam", category: "poultry", image: "/assets/products/ayam.png", description: "Sayap ayam segar untuk digoreng", variants: [
+    { id: 34, label: "1 kg", price: 32000 }
+  ]},
+  { id: "ceker-ayam", name: "Ceker Ayam", slug: "ceker-ayam", category: "poultry", image: "/assets/products/ayam.png", description: "Ceker ayam segar untuk soto dan sup", variants: [
+    { id: 35, label: "1 kg", price: 18000 }
+  ]},
+  { id: "ati-ampela", name: "Ati Ampela", slug: "ati-ampela", category: "poultry", image: "/assets/products/ayam.png", description: "Ati ampela ayam segar", variants: [
+    { id: 36, label: "1 kg", price: 28000 }
+  ]},
+  { id: "ayam-kampung", name: "Ayam Kampung", slug: "ayam-kampung", category: "poultry", image: "/assets/products/ayam.png", description: "Ayam kampung utuh per ekor", badge: "Premium", variants: [
+    { id: 37, label: "1 Ekor", price: 75000 }
+  ]},
+  { id: "kulit-ayam", name: "Kulit Ayam", slug: "kulit-ayam", category: "poultry", image: "/assets/products/ayam.png", description: "Kulit ayam untuk kerupuk dan goreng", variants: [
+    { id: 38, label: "1 kg", price: 15000 }
+  ]},
+
+  // ===== HEALTH / HERBALIFE =====
+  { id: "shake-mix", name: "Shake Mix", slug: "shake-mix", category: "health", image: "/assets/products/herbalife.png", description: "Nutritional Shake Mix pengganti makan sehat", badge: "Best Seller", variants: [
+    { id: 39, label: "Vanilla", price: 310000 },
+    { id: 40, label: "Coklat", price: 310000 },
+    { id: 41, label: "Berry", price: 310000 }
+  ]},
+  { id: "herbal-aloe", name: "Herbal Aloe Concentrate", slug: "herbal-aloe", category: "health", image: "/assets/products/herbalife.png", description: "Minuman aloe vera menyegarkan untuk pencernaan", badge: "Favorit", variants: [
+    { id: 42, label: "Mango", price: 195000 }
+  ]},
+  { id: "herbal-tea", name: "Herbal Tea Concentrate", slug: "herbal-tea", category: "health", image: "/assets/products/herbalife.png", description: "Teh herbal pelangsing dan energi", variants: [
+    { id: 43, label: "1 Botol", price: 195000 }
+  ]},
+  { id: "nrg-tea", name: "NRG Tea", slug: "nrg-tea", category: "health", image: "/assets/products/herbalife.png", description: "Teh guarana untuk stamina dan fokus", variants: [
+    { id: 44, label: "1 Botol", price: 210000 }
+  ]},
+  { id: "liftoff", name: "Liftoff Effervescent", slug: "liftoff", category: "health", image: "/assets/products/herbalife.png", description: "Tablet energi instan 10 sachet", variants: [
+    { id: 45, label: "10 Sachet", price: 145000 }
+  ]},
+  { id: "fiber-herb", name: "Fiber & Herb", slug: "fiber-herb", category: "health", image: "/assets/products/herbalife.png", description: "Suplemen serat untuk pencernaan sehat", variants: [
+    { id: 46, label: "1 Botol", price: 165000 }
+  ]},
+  { id: "protein-ppp", name: "Protein Powder PPP", slug: "protein-ppp", category: "health", image: "/assets/products/herbalife.png", description: "Personalized Protein Powder", variants: [
+    { id: 47, label: "1 Botol", price: 280000 }
+  ]},
+  { id: "cell-u-loss", name: "Cell-U-Loss", slug: "cell-u-loss", category: "health", image: "/assets/products/herbalife.png", description: "Membantu mengurangi retensi air", variants: [
+    { id: 48, label: "1 Botol", price: 175000 }
+  ]},
+
+  // ===== SERVICES =====
+  { id: "ganti-lcd", name: "Ganti LCD HP", slug: "ganti-lcd", category: "services", image: "/assets/products/service.png", description: "Ganti LCD/layar HP semua merk", badge: "Populer", variants: [
+    { id: 49, label: "Mulai dari", price: 150000 }
+  ]},
+  { id: "ganti-baterai", name: "Ganti Baterai HP", slug: "ganti-baterai", category: "services", image: "/assets/products/service.png", description: "Ganti baterai HP semua merk", variants: [
+    { id: 50, label: "Semua Merk", price: 75000 }
+  ]},
+  { id: "service-software", name: "Service Software HP", slug: "service-software", category: "services", image: "/assets/products/service.png", description: "Flash, unlock, install ulang HP", variants: [
+    { id: 51, label: "Per Unit", price: 50000 }
+  ]},
+  { id: "ganti-konektor", name: "Ganti Konektor Cas", slug: "ganti-konektor", category: "services", image: "/assets/products/service.png", description: "Ganti port charging HP", variants: [
+    { id: 52, label: "Per Unit", price: 60000 }
+  ]},
+  { id: "service-kipas", name: "Service Kipas Angin", slug: "service-kipas", category: "services", image: "/assets/products/service-elektronik.png", description: "Service dan perbaikan kipas angin", variants: [
+    { id: 53, label: "Per Unit", price: 40000 }
+  ]},
+  { id: "service-setrika", name: "Service Setrika", slug: "service-setrika", category: "services", image: "/assets/products/service-elektronik.png", description: "Perbaikan setrika listrik", variants: [
+    { id: 54, label: "Per Unit", price: 35000 }
+  ]},
+  { id: "service-rice-cooker", name: "Service Rice Cooker", slug: "service-rice-cooker", category: "services", image: "/assets/products/service-elektronik.png", description: "Perbaikan magic com/rice cooker", variants: [
+    { id: 55, label: "Per Unit", price: 45000 }
+  ]},
+  { id: "tempered-glass", name: "Pasang Tempered Glass", slug: "tempered-glass", category: "services", image: "/assets/products/service.png", description: "Pasang anti gores kaca HP", variants: [
+    { id: 56, label: "Per Unit", price: 20000 }
+  ]},
+  { id: "service-dispenser", name: "Service Dispenser", slug: "service-dispenser", category: "services", image: "/assets/products/service-elektronik.png", description: "Perbaikan dispenser air", variants: [
+    { id: 57, label: "Per Unit", price: 50000 }
+  ]},
+  { id: "refill-tinta", name: "Isi Ulang Tinta Printer", slug: "refill-tinta", category: "services", image: "/assets/products/service.png", description: "Refill tinta printer semua merk", variants: [
+    { id: 58, label: "Per Unit", price: 25000 }
+  ]},
+
+  // ===== GAME TOP UP =====
+  { id: "ml-diamond", name: "Mobile Legends Diamond", slug: "ml-diamond", category: "topup", image: "/assets/products/ml.png", description: "Top up diamond Mobile Legends via ID", badge: "Terlaris", variants: [
+    { id: 59, label: "86 Diamond", price: 19000 },
+    { id: 60, label: "172 Diamond", price: 37000 },
+    { id: 61, label: "344 Diamond", price: 72000 },
+    { id: 62, label: "706 Diamond", price: 143000 }
+  ]},
+  { id: "ff-diamond", name: "Free Fire Diamond", slug: "ff-diamond", category: "topup", image: "/assets/products/ff.png", description: "Top up diamond Free Fire via ID", badge: "Populer", variants: [
+    { id: 63, label: "100 Diamond", price: 15000 },
+    { id: 64, label: "310 Diamond", price: 46000 },
+    { id: 65, label: "520 Diamond", price: 72000 }
+  ]},
+  { id: "pubg-uc", name: "PUBG Mobile UC", slug: "pubg-uc", category: "topup", image: "/assets/products/pubg.png", description: "Top up UC PUBG Mobile", variants: [
+    { id: 66, label: "60 UC", price: 15000 },
+    { id: 67, label: "325 UC", price: 75000 }
+  ]},
+  { id: "genshin-genesis", name: "Genshin Impact Genesis", slug: "genshin-genesis", category: "topup", image: "/assets/products/genshin.png", description: "Top up Genesis Crystal Genshin Impact", badge: "Hot", variants: [
+    { id: 68, label: "60 Crystal", price: 16000 },
+    { id: 69, label: "330 Crystal", price: 79000 }
+  ]},
+  { id: "valorant-vp", name: "Valorant Points", slug: "valorant-vp", category: "topup", image: "/assets/products/valorant.png", description: "Top up Valorant Points", variants: [
+    { id: 70, label: "125 VP", price: 15000 },
+    { id: 71, label: "425 VP", price: 50000 }
+  ]},
+  { id: "roblox-robux", name: "Roblox Robux", slug: "roblox-robux", category: "topup", image: "/assets/products/roblox.png", description: "Top up Robux Roblox", badge: "Gen Z Fav", variants: [
+    { id: 72, label: "80 Robux", price: 15000 },
+    { id: 73, label: "400 Robux", price: 70000 },
+    { id: 74, label: "800 Robux", price: 135000 }
+  ]},
+  { id: "hsr-oneiric", name: "Honkai Star Rail", slug: "hsr-oneiric", category: "topup", image: "/assets/products/hsr.png", description: "Top up Oneiric Shard Honkai Star Rail", variants: [
+    { id: 75, label: "60 Shard", price: 16000 },
+    { id: 76, label: "330 Shard", price: 79000 }
+  ]},
+  { id: "coc-gems", name: "Clash of Clans Gems", slug: "coc-gems", category: "topup", image: "/assets/products/coc.png", description: "Top up Gems Clash of Clans", variants: [
+    { id: 77, label: "80 Gems", price: 15000 },
+    { id: 78, label: "500 Gems", price: 75000 }
+  ]},
+  { id: "codm-cp", name: "Call of Duty Mobile CP", slug: "codm-cp", category: "topup", image: "/assets/products/codm.png", description: "Top up CP CODM", variants: [
+    { id: 79, label: "80 CP", price: 15000 }
+  ]},
+  { id: "fortnite-vbucks", name: "Fortnite V-Bucks", slug: "fortnite-vbucks", category: "topup", image: "/assets/products/fortnite.png", description: "Top up V-Bucks Fortnite", variants: [
+    { id: 80, label: "1000 V-Bucks", price: 60000 }
+  ]},
+
+  // ===== DIGITAL / PREMIUM ACCOUNTS =====
+  { id: "netflix", name: "Netflix Premium", slug: "netflix", category: "digital", image: "/assets/products/netflix.png", description: "Akun Netflix Premium UHD 4K streaming tanpa batas tanpa iklan", badge: "Best Seller", variants: [
+    { id: 89, label: "1 Bulan", price: 45000 },
+    { id: 90, label: "3 Bulan", price: 120000 }
+  ]},
+  { id: "spotify", name: "Spotify Premium", slug: "spotify", category: "digital", image: "/assets/products/spotify.png", description: "Spotify Premium tanpa iklan, skip tanpa batas, download offline", badge: "Laris", variants: [
+    { id: 91, label: "1 Bulan", price: 15000 },
+    { id: 200, label: "3 Bulan", price: 40000 },
+    { id: 92, label: "6 Bulan", price: 75000 },
+    { id: 201, label: "12 Bulan", price: 130000 }
+  ]},
+  { id: "youtube", name: "YouTube Premium", slug: "youtube", category: "digital", image: "/assets/products/youtube.png", description: "YouTube tanpa iklan + YouTube Music, download offline", badge: "Populer", variants: [
+    { id: 93, label: "1 Bulan", price: 20000 },
+    { id: 94, label: "3 Bulan", price: 55000 }
+  ]},
+  { id: "disney", name: "Disney+ Hotstar", slug: "disney", category: "digital", image: "/assets/products/disney.png", description: "Disney+ Hotstar Premium untuk konten Disney, Marvel, Star Wars", variants: [
+    { id: 95, label: "1 Bulan", price: 20000 },
+    { id: 96, label: "1 Tahun", price: 100000 }
+  ]},
+  { id: "canva", name: "Canva Pro", slug: "canva", category: "digital", image: "/assets/products/canva.png", description: "Canva Pro full fitur design premium", badge: "Best Deal", variants: [
+    { id: 97, label: "1 Bulan", price: 25000 },
+    { id: 98, label: "1 Tahun", price: 150000 }
+  ]},
+  { id: "chatgpt", name: "ChatGPT Plus", slug: "chatgpt", category: "digital", image: "/assets/products/chatgpt.png", description: "ChatGPT Plus GPT-4 penuh, respon cepat dan priority access", badge: "Hot", variants: [
+    { id: 99, label: "1 Bulan", price: 200000 }
+  ]},
+  { id: "microsoft365", name: "Microsoft 365", slug: "microsoft365", category: "digital", image: "/assets/products/microsoft365.png", description: "Word, Excel, PowerPoint dan 1TB OneDrive", variants: [
+    { id: 100, label: "1 Tahun", price: 85000 }
+  ]},
+  { id: "icloud", name: "iCloud Storage", slug: "icloud", category: "digital", image: "/assets/products/icloud.png", description: "iCloud penyimpanan cloud Apple aman", variants: [
+    { id: 111, label: "50GB / Bulan", price: 15000 },
+    { id: 112, label: "200GB / Bulan", price: 45000 }
+  ]}
+];
+
+fs.writeFileSync('./src/data/products.json', JSON.stringify(PRODUCTS, null, 2));
+
+console.log("products.json updated");
