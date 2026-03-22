@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
-import { X, Minus, Plus, ShoppingCart, CheckCircle2, Shield, Heart } from "lucide-react";
+import { X, Minus, Plus, ShoppingCart, CheckCircle2, Shield, Heart, Zap, Copy, Search, Clock } from "lucide-react";
 import { formatPrice } from "@/data/products";
 import { useCart } from "./CartProvider";
 
@@ -11,6 +11,8 @@ export default function ProductModal({ product, onClose }) {
   const [agreed, setAgreed] = useState(false);
   const [added, setAdded] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
+  const [copiedVoucher, setCopiedVoucher] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     if (product) {
@@ -18,6 +20,8 @@ export default function ProductModal({ product, onClose }) {
       setQty(1);
       setAgreed(false);
       setAdded(false);
+      setCopiedVoucher(false);
+      setSearchQuery("");
       document.body.style.overflow = "hidden";
     }
     return () => { document.body.style.overflow = ""; };
@@ -87,37 +91,109 @@ export default function ProductModal({ product, onClose }) {
             
             <p className="text-sm text-gray-400 leading-relaxed mb-6">{product.description}</p>
             
-            <div className="flex gap-3 p-4 bg-[#ffc7d1]/5 rounded-2xl border border-[#ffc7d1]/10 mt-auto w-full text-left">
+            <div className="flex gap-3 p-4 bg-[#ffc7d1]/5 rounded-2xl border border-[#ffc7d1]/10 mt-auto w-full text-left mb-4">
               <Shield size={20} className="text-[#ffc7d1] flex-shrink-0 mt-0.5" />
               <div>
                 <p className="text-sm font-semibold text-white mb-0.5">Garansi Produk</p>
                 <p className="text-xs text-gray-400 leading-relaxed">Garansi penuh selama masa aktif. Hubungi support jika ada kendala.</p>
               </div>
             </div>
+
+            {/* Claim Voucher */}
+            <div className="flex flex-col gap-2 p-4 bg-[#ffc7d1]/5 border border-[#ffc7d1]/20 rounded-2xl relative group hover:border-[#ffc7d1]/40 transition-colors w-full text-left mt-auto">
+              <span className="text-[11px] font-bold text-[#ffc7d1] uppercase tracking-wider mb-1 flex items-center gap-1.5">
+                <Zap size={12} className="text-yellow-400 fill-yellow-400" /> PROMO RAMADHAN DISKON 10%
+              </span>
+              <div className="flex items-center justify-between">
+                <span className="text-white font-mono font-bold tracking-widest text-lg">LEBARANDY10</span>
+                <button 
+                  onClick={() => {
+                    navigator.clipboard.writeText("LEBARANDY10");
+                    setCopiedVoucher(true);
+                    setTimeout(() => setCopiedVoucher(false), 2000);
+                  }}
+                  className="px-3 py-1.5 bg-gradient-to-r from-[#ffc7d1] to-[#ffd9c7] hover:shadow-md hover:shadow-[#ffc7d1]/20 text-[#0f0f12] text-xs font-bold rounded-lg flex items-center gap-1.5 transition-all hover:scale-105 active:scale-95"
+                  title="Salin Voucher"
+                >
+                  {copiedVoucher ? <CheckCircle2 size={16} /> : <Copy size={16} />} Salin
+                </button>
+              </div>
+            </div>
+
           </div>
 
           {/* Right */}
           <div className="p-8 flex flex-col gap-6">
             {/* Variants */}
-            <div>
-              <h3 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
+            <div className="flex flex-col gap-4">
+              <h3 className="text-sm font-semibold text-white flex items-center gap-2">
                 Pilih Opsi <span className="text-xs font-normal text-gray-500 px-2 py-0.5 bg-white/5 rounded-full">Wajib</span>
               </h3>
-              <div className="grid grid-cols-2 gap-3">
-                {product.variants.map(v => (
-                  <button
-                    key={v.id}
-                    onClick={() => setSelectedVariant(v)}
-                    className={`p-3.5 rounded-2xl border text-left transition-all duration-300 ${
-                      selectedVariant.id === v.id
-                        ? "border-[#ffc7d1] bg-[#ffc7d1]/10 shadow-sm shadow-[#ffc7d1]/5 -translate-y-0.5"
-                        : "border-white/5 bg-[#0f0f12] hover:border-white/20"
-                    }`}
-                  >
-                    <span className={`block text-sm font-semibold mb-1 ${selectedVariant.id === v.id ? "text-[#ffc7d1]" : "text-white"}`}>{v.label}</span>
-                    <span className={`text-xs ${selectedVariant.id === v.id ? "text-[#ffd9c7]" : "text-gray-500"}`}>Rp {formatPrice(v.price)}</span>
-                  </button>
-                ))}
+              
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <Search size={16} className="text-gray-500" />
+                </div>
+                <input
+                  type="text"
+                  placeholder="Cari varian produk"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full bg-[#0f0f12] border border-white/10 text-white rounded-xl pl-10 pr-4 py-3 text-sm focus:outline-none focus:border-[#ffc7d1]/50 transition-colors"
+                />
+              </div>
+
+              <div className="flex flex-col gap-3 max-h-[350px] overflow-y-auto pr-1.5 custom-scrollbar">
+                {product.variants.filter(v => v.label.toLowerCase().includes(searchQuery.toLowerCase())).map((v, i) => {
+                  const isSelected = selectedVariant.id === v.id;
+                  const isReseller = v.label.toUpperCase().includes("RESELLER") || (v.price >= 30000 && i > 0 && product.category === 'digital');
+                  
+                  // Make delivery realistic based on category
+                  const manualCategories = ['groceries', 'poultry', 'health', 'services'];
+                  const isManual = manualCategories.includes(product.category) || v.label.toUpperCase().includes('MANUAL') || v.label.toUpperCase().includes('HEAD');
+                  const isInstan = !isManual;
+                  
+                  const delivery = isInstan 
+                    ? { text: "Pengiriman INSTAN", color: "text-[#25D366]", Icon: Zap } 
+                    : { text: "Pengiriman MANUAL", color: "text-[#4c4cdd]", Icon: ({size, className}) => <span className={`w-2 h-2 rounded-full bg-current ${className || ''}`} style={{width: size-3, height: size-3}} /> };
+                  
+                  const stockText = i === 0 ? "Stok terakhir" : "Tersedia";
+                  const stockColor = i === 0 ? "text-[#ff4c4c]" : "text-[#25D366]";
+                  
+                  return (
+                    <button
+                      key={v.id}
+                      onClick={() => setSelectedVariant(v)}
+                      className={`relative p-3.5 rounded-xl border text-left transition-all duration-300 flex flex-col gap-3 overflow-hidden shrink-0 ${
+                        isSelected
+                          ? "border-[#5c5cee] bg-[#4c4cdd]/10 shadow-sm shadow-[#4c4cdd]/20"
+                          : "border-[#2a2a35] bg-[#1a1a24] hover:border-white/20 hover:bg-[#1f1f2e]"
+                      }`}
+                    >
+                      {isReseller && (
+                        <span className="absolute top-0 right-0 bg-[#ffb700] text-[#0f0f12] text-[8.5px] font-extrabold px-2 py-0.5 rounded-bl-[10px] uppercase tracking-wider z-10 shadow-sm">
+                          KHUSUS RESELLER
+                        </span>
+                      )}
+                      
+                      <div className="flex justify-between items-start gap-2 w-full mt-1">
+                        <div className="flex flex-col gap-1 pr-1.5">
+                          <span className={`block text-[13px] leading-snug font-extrabold ${isSelected ? "text-white" : "text-gray-200"}`}>{v.label}</span>
+                          <span className={`text-[10px] uppercase font-bold tracking-wide ${stockColor}`}>{stockText}</span>
+                        </div>
+                        <span className="text-[13px] font-bold text-white whitespace-nowrap mt-0.5">Rp. {formatPrice(v.price)}</span>
+                      </div>
+                      
+                      <hr className="border-white/10 w-full" />
+                      
+                      <div className="flex justify-end w-full">
+                        <span className={`text-[9.5px] font-bold uppercase tracking-wider flex items-center gap-1.5 opacity-90 ${delivery.color}`}>
+                          <delivery.Icon size={11} fill="currentColor" strokeWidth={1} /> {delivery.text}
+                        </span>
+                      </div>
+                    </button>
+                  );
+                })}
               </div>
             </div>
 

@@ -55,7 +55,7 @@ export function CartProvider({ children }) {
   const cartCount = cart.reduce((s, c) => s + c.qty, 0);
   const cartTotal = cart.reduce((s, c) => s + c.price * c.qty, 0);
 
-  const sendWhatsApp = useCallback(() => {
+  const sendWhatsApp = useCallback((discountPercent = 0, voucherCode = "") => {
     if (cart.length === 0) return;
     const fmt = (n) => n.toLocaleString("id-ID");
     let msg = `*Pesanan dari Kedai Nindy*\n\n`;
@@ -63,7 +63,17 @@ export function CartProvider({ children }) {
       msg += `${i + 1}. ${item.productName} (${item.variantLabel})\n`;
       msg += `   ${item.qty} × Rp${fmt(item.price)} = *Rp${fmt(item.price * item.qty)}*\n`;
     });
-    msg += `\n──────────────\n*Total: Rp${fmt(cartTotal)}*\n\nTerima kasih!`;
+    
+    const subtotal = cartTotal;
+    const discountAmount = subtotal * discountPercent;
+    const finalTotal = subtotal - discountAmount;
+    
+    if (discountPercent > 0) {
+      msg += `\n──────────────\nSubtotal: Rp${fmt(subtotal)}\nDiskon Promo (${voucherCode}): -Rp${fmt(discountAmount)}\n*Total Bayar: Rp${fmt(finalTotal)}*\n\nTerima kasih!`;
+    } else {
+      msg += `\n──────────────\n*Total: Rp${fmt(subtotal)}*\n\nTerima kasih!`;
+    }
+    
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, "_blank");
   }, [cart, cartTotal]);
 

@@ -349,7 +349,7 @@
       {
         "id": 23,
         "label": "600 ml",
-        "price": 4000
+        "price": 5000
       }
     ]
   },
@@ -1188,9 +1188,29 @@
     "badge": "Hot",
     "variants": [
       {
-        "id": 99,
+        "id": 991,
         "label": "1 Bulan",
-        "price": 200000
+        "price": 20000
+      },
+      {
+        "id": 992,
+        "label": "1 Bulan Email Pribadi",
+        "price": 23000
+      },
+      {
+        "id": 993,
+        "label": "1 Bulan Head",
+        "price": 25000
+      },
+      {
+        "id": 994,
+        "label": "1 Bulan Plus 2 Akun",
+        "price": 30000
+      },
+      {
+        "id": 995,
+        "label": "1 Bulan Head 2 Akun",
+        "price": 35000
       }
     ]
   },

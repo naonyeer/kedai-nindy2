@@ -4,6 +4,7 @@ import { CartProvider } from "@/components/CartProvider";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Background from "@/components/Background";
+import PromoPopup from "@/components/PromoPopup";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,11 +18,12 @@ export default function RootLayout({ children }) {
     <html lang="id" className={`${inter.className} dark`}>
       <body className="bg-[#050505] text-white antialiased min-h-screen flex flex-col relative selection:bg-orange-500/30">
         <Background />
+        <PromoPopup />
         <CartProvider>
           <Navbar />
           <main className="flex-1 pt-20">{children}</main>
           <Footer />
-        </CartProvider>
+          </CartProvider>
       </body>
     </html>
   );
