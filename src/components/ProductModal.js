@@ -43,7 +43,7 @@ export default function ProductModal({ product, onClose }) {
   const handleWhatsApp = useCallback(() => {
     if (!selectedVariant || !agreed) return;
     const total = selectedVariant.price * qty;
-    const msg = `*Pesanan Kedai Nindy*\n\n${product.name} (${selectedVariant.label})\n${qty} × Rp${formatPrice(selectedVariant.price)} = *Rp${formatPrice(total)}*\n\nTerima kasih!`;
+    const msg = `*Pesanan Kedai Game*\n\n${product.name} (${selectedVariant.label})\n${qty} × Rp${formatPrice(selectedVariant.price)} = *Rp${formatPrice(total)}*\n\nTerima kasih!`;
     window.open(`https://wa.me/6281266002147?text=${encodeURIComponent(msg)}`, "_blank");
   }, [product, selectedVariant, qty, agreed]);
 
@@ -217,7 +217,7 @@ export default function ProductModal({ product, onClose }) {
                 <input type="checkbox" checked={agreed} onChange={e => setAgreed(e.target.checked)} className="peer appearance-none w-5 h-5 rounded-lg border-2 border-gray-600 checked:border-[#ffc7d1] checked:bg-[#ffc7d1] transition-all cursor-pointer" />
                 <CheckCircle2 size={12} className="absolute text-[#0f0f12] opacity-0 peer-checked:opacity-100 pointer-events-none" strokeWidth={4} />
               </div>
-              <span className="text-sm text-gray-400 leading-relaxed">Saya menyetujui syarat dan ketentuan layanan & garansi Kedai Nindy.</span>
+              <span className="text-sm text-gray-400 leading-relaxed">Saya menyetujui syarat dan ketentuan layanan & garansi Kedai Game.</span>
             </label>
 
             {/* Buttons */}

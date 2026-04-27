@@ -16,11 +16,11 @@ export default function Footer() {
                 />
               </div>
               <span className="font-bold text-lg text-white tracking-tight">
-                Kedai <span className="text-[#ffc7d1]">Nindy</span>
+                Kedai <span className="text-[#ffc7d1]">Game</span>
               </span>
             </div>
             <p className="text-sm leading-relaxed max-w-xs">
-              Toko cantik kesayanganmu. Melayani kebutuhan harian, layanan digital, hingga top up game dengan suasana yang cozy.
+              Toko top up game kesayanganmu. Diamond, UC, Genesis Crystal, dan voucher game langsung masuk via sistem Digiflazz — instan, aman, 24 jam.
             </p>
           </div>
           
@@ -30,8 +30,11 @@ export default function Footer() {
               <Link href="/" className="hover:text-[#ffc7d1] transition-colors flex items-center gap-2 group">
                 <div className="w-1.5 h-1.5 rounded-full bg-white/10 group-hover:bg-[#ffc7d1] transition-colors" /> Beranda
               </Link>
+              <Link href="/topup" className="hover:text-[#ffc7d1] transition-colors flex items-center gap-2 group">
+                <div className="w-1.5 h-1.5 rounded-full bg-white/10 group-hover:bg-[#ffc7d1] transition-colors" /> Top Up Game
+              </Link>
               <Link href="/products" className="hover:text-[#ffc7d1] transition-colors flex items-center gap-2 group">
-                <div className="w-1.5 h-1.5 rounded-full bg-white/10 group-hover:bg-[#ffc7d1] transition-colors" /> Katalog Produk
+                <div className="w-1.5 h-1.5 rounded-full bg-white/10 group-hover:bg-[#ffc7d1] transition-colors" /> Layanan Lainnya
               </Link>
               <Link href="/cart" className="hover:text-[#ffc7d1] transition-colors flex items-center gap-2 group">
                 <div className="w-1.5 h-1.5 rounded-full bg-white/10 group-hover:bg-[#ffc7d1] transition-colors" /> Keranjang Belanja
@@ -65,7 +68,7 @@ export default function Footer() {
         </div>
         
         <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-[11px] font-medium uppercase tracking-widest">
-          <p>© {new Date().getFullYear()} Kedai Nindy. Crafted with <Heart size={10} className="inline-block text-[#ffc7d1] fill-[#ffc7d1]" /> for you.</p>
+          <p>© {new Date().getFullYear()} Kedai Game. Powered by <span className="text-[#ffc7d1] font-semibold">Digiflazz</span>.</p>
           <div className="flex gap-6">
             <span className="text-white/20">Privacy Policy</span>
             <span className="text-white/20">Terms of Service</span>
