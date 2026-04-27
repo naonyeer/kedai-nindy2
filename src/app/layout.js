@@ -9,8 +9,8 @@ import PromoPopup from "@/components/PromoPopup";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Kedai Nindy — Toko Online Terlengkap",
-  description: "Kedai Nindy menyediakan sembako, ayam potong, obat kesehatan, service HP & elektronik, top up game, dan akun premium digital. Pesan via WhatsApp!",
+  title: "Kedai Game — Top Up Diamond, UC & Voucher Game",
+  description: "Kedai Game: top up Mobile Legends, Free Fire, PUBG, Genshin Impact, Valorant, dan ratusan game lain. Proses instan via Digiflazz, harga termurah.",
 };
 
 export default function RootLayout({ children }) {

@@ -2,13 +2,13 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCart } from "./CartProvider";
-import { Package, Grid3X3, Headphones, Menu, X, ShoppingBag, Heart, User } from "lucide-react";
+import { Package, Grid3X3, Headphones, Menu, X, ShoppingBag, Heart, User, Gamepad2 } from "lucide-react";
 import { useState, useEffect } from "react";
 
 const NAV_LINKS = [
   { href: "/", label: "Home", icon: Heart },
+  { href: "/topup", label: "Top Up", icon: Gamepad2 },
   { href: "/products", label: "Shop", icon: Package },
-  { href: "/#categories", label: "Categories", icon: Grid3X3 },
   { href: "https://wa.me/6281266002147", label: "Support", icon: Headphones, external: true },
 ];
 
@@ -58,7 +58,7 @@ export default function Navbar() {
             />
           </div>
           <span className="font-bold text-lg text-white tracking-tight">
-            Kedai <span className="text-[#ffc7d1]">Nindy</span>
+            Kedai <span className="text-[#ffc7d1]">Game</span>
           </span>
         </Link>
 

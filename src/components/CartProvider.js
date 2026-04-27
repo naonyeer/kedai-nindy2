@@ -58,7 +58,7 @@ export function CartProvider({ children }) {
   const sendWhatsApp = useCallback((discountPercent = 0, voucherCode = "") => {
     if (cart.length === 0) return;
     const fmt = (n) => n.toLocaleString("id-ID");
-    let msg = `*Pesanan dari Kedai Nindy*\n\n`;
+    let msg = `*Pesanan dari Kedai Game*\n\n`;
     cart.forEach((item, i) => {
       msg += `${i + 1}. ${item.productName} (${item.variantLabel})\n`;
       msg += `   ${item.qty} × Rp${fmt(item.price)} = *Rp${fmt(item.price * item.qty)}*\n`;
