@@ -3,7 +3,11 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import { Search, ArrowRight } from "lucide-react";
 
-export default function TopupBrowser({ curated, others, formatRupiah }) {
+function formatRupiah(n) {
+  return Number(n || 0).toLocaleString("id-ID");
+}
+
+export default function TopupBrowser({ curated, others }) {
   const [q, setQ] = useState("");
 
   const filteredCurated = useMemo(() => {
@@ -35,7 +39,7 @@ export default function TopupBrowser({ curated, others, formatRupiah }) {
       <h2 className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-4">Game Populer</h2>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-12">
         {filteredCurated.map((g) => (
-          <GameCard key={g.slug} g={g} formatRupiah={formatRupiah} />
+          <GameCard key={g.slug} g={g} />
         ))}
         {filteredCurated.length === 0 ? (
           <div className="col-span-full text-center text-gray-500 text-sm py-8">Tidak ada game cocok dengan &quot;{q}&quot;.</div>
@@ -64,7 +68,7 @@ export default function TopupBrowser({ curated, others, formatRupiah }) {
   );
 }
 
-function GameCard({ g, formatRupiah }) {
+function GameCard({ g }) {
   const inner = (
     <div
       className={`group relative aspect-[3/4] rounded-2xl overflow-hidden border border-white/5 bg-[#1a1a1f] transition-all ${

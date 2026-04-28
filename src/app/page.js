@@ -14,10 +14,6 @@ import HomePopularGames from "./HomePopularGames";
 
 export const dynamic = "force-dynamic";
 
-function formatRupiah(n) {
-  return Number(n || 0).toLocaleString("id-ID");
-}
-
 export default async function HomePage() {
   const { curated, mock } = await fetchGames();
 
@@ -137,7 +133,7 @@ export default async function HomePage() {
             </Link>
           </div>
 
-          <HomePopularGames items={popular.slice(0, 8)} formatRupiah={formatRupiah} />
+          <HomePopularGames items={popular.slice(0, 8)} />
         </div>
       </section>
 
