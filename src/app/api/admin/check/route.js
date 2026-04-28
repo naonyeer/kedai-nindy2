@@ -1,11 +1,8 @@
 import { NextResponse } from "next/server";
+import { getAdminPassword } from "@/lib/admin-auth";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
-
-function getPassword() {
-  return process.env.ADMIN_PASSWORD || "171202";
-}
 
 export async function POST(request) {
   let password = "";
@@ -15,7 +12,7 @@ export async function POST(request) {
   } catch {
     password = request.headers.get("x-admin-password") || "";
   }
-  const expected = getPassword();
+  const expected = getAdminPassword();
   if (!expected) {
     return NextResponse.json({ ok: false, error: "ADMIN_PASSWORD belum di-set" }, { status: 503 });
   }
