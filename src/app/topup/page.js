@@ -9,10 +9,6 @@ export const metadata = {
   description: "Top up diamond, UC, voucher game tercepat dan termurah. Mobile Legends, Free Fire, PUBG, Genshin Impact, Valorant, dan lainnya.",
 };
 
-function formatRupiah(n) {
-  return Number(n).toLocaleString("id-ID");
-}
-
 export default async function TopupPage() {
   const { curated, others, mock } = await fetchGames();
 
@@ -71,7 +67,6 @@ export default async function TopupPage() {
           minPrice: products.length ? Math.min(...products.map((p) => p.price)) : null,
           variantCount: products.length,
         }))}
-        formatRupiah={formatRupiah}
       />
 
       <div className="mt-16 text-center">

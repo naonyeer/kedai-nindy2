@@ -2,7 +2,11 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
-export default function HomePopularGames({ items, formatRupiah }) {
+function formatRupiah(n) {
+  return Number(n || 0).toLocaleString("id-ID");
+}
+
+export default function HomePopularGames({ items }) {
   if (!items.length) {
     return (
       <div className="bg-[#1a1a1f] border border-white/5 rounded-2xl p-8 text-center text-gray-500">
